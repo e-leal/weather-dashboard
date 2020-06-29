@@ -1,6 +1,10 @@
+$("#cityList").on("click", "li", function(){
+    console.log("listen to on click event")
+    displayWeather($(this).text());
+});
 
 function  citySearch(){
-    var searchEl = document.getElementById("cityContainer");
+    var searchEl = document.getElementById("cityList");
     var cityVal = document.getElementById("searchCity").value;
     var weekEl = document.getElementById("weekWeather");
     clearResults();
@@ -12,7 +16,7 @@ function  citySearch(){
         var todayDate = moment().format('l');
         document.getElementById("searchCity").value = "";
         var cityEl = document.createElement("li");
-        cityEl.className = "list-group-item searchedCity";
+        cityEl.className = "searchedCity list-group-item";
         cityEl.innerHTML = cityVal;
         searchEl.appendChild(cityEl);
         //todayEl.innerHTML = "<h2>"+cityVal+ " ("+todayDate+")</h2>";
@@ -20,8 +24,6 @@ function  citySearch(){
     }
     
 }
-
-
 
 function clearResults(){
     var weekEl = document.getElementById("weekWeather");
@@ -31,6 +33,7 @@ function clearResults(){
 }
 
 function displayWeather(selectedCity){
+    clearResults();
     var innerTodayContent = "";
     var innerWeekContent = "";
     var todayDate = moment().format('l');
@@ -88,7 +91,9 @@ function savedSearch(savedCity){
     displayWeather(savedCity);
 }
 
-$(".searchedCity").on("click", function(){
+
+
+/* $("li").on("click", function(){
     console.log("Trying to read history search: ", this);
-    savedSearch($(this).text());
-});
+    displayWeather($(this).text());
+}); */
