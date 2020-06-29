@@ -2,6 +2,24 @@ $("#cityList").on("click", "li", function(){
     console.log("listen to on click event")
     displayWeather($(this).text());
 });
+var savedCities = JSON.parse(localStorage.getItem('cities')) || [];
+
+loadCities();
+
+function loadCities(){
+    var savedCities = JSON.parse(localStorage.getItem('cities')) || [];
+    var searchEl = document.getElementById("cityList");
+    for(var i = 0; i< savedCities.length; i++){
+        var cityEl = document.createElement("li");
+        cityEl.className = "searchedCity list-group-item";
+        cityEl.innerHTML = savedCities[i];
+        searchEl.appendChild(cityEl);
+    }
+}
+
+function saveCities(){
+    localStorage.setItem("cities", JSON.stringify(savedCities));
+}
 
 function  citySearch(){
     var searchEl = document.getElementById("cityList");
@@ -28,6 +46,8 @@ function  citySearch(){
             cityEl.className = "searchedCity list-group-item";
             cityEl.innerHTML = cityVal;
             searchEl.appendChild(cityEl);
+            savedCities.push(cityVal);
+            saveCities();
         }       
         //todayEl.innerHTML = "<h2>"+cityVal+ " ("+todayDate+")</h2>";
         displayWeather(cityVal);
@@ -90,16 +110,16 @@ function displayWeather(selectedCity){
     })
 }
 
-function savedSearch(savedCity){
+/* function savedSearch(savedCity){
     console.log("Entered the savedSearch function");
     clearResults();
     /* var weekEl = document.getElementById("weekWeather");
-    var todayEl = document.getElementById("todayWeather"); */
+    var todayEl = document.getElementById("todayWeather"); 
     console.log(this);
     //var citySelected = savedCity;
     console.log(savedCity);
     displayWeather(savedCity);
-}
+} */
 
 
 
