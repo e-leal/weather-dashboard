@@ -3,7 +3,6 @@ $("#cityList").on("click", "li", function(){
     displayWeather($(this).text());
 });
 var savedCities = JSON.parse(localStorage.getItem('cities')) || [];
-
 loadCities();
 
 function loadCities(){
@@ -66,9 +65,13 @@ function displayWeather(selectedCity){
     clearResults();
     var innerTodayContent = "";
     var innerWeekContent = "";
+    var uv = "";
     var todayDate = moment().format('l');
     var weekEl = document.getElementById("weekWeather");
     var todayEl = document.getElementById("todayWeather");
+    
+
+    console.log("uvVal is ", uv)
     fetch(
         'https://api.openweathermap.org/data/2.5/weather?q=' + selectedCity + '&appid=0d3489588c8dc1cc4818f8f7817f20e1&units=imperial'
     )
@@ -76,6 +79,7 @@ function displayWeather(selectedCity){
         return todayResponse.json();
     })
     .then(function(todayResponse){
+        
         var weatherIcon = todayResponse.weather[0].icon;
         innerTodayContent = "<h2>"+selectedCity+ " ("+todayDate+")" + '<img src="http://openweathermap.org/img/w/'+ weatherIcon + '.png" /></h2>';
         var tempVal = todayResponse.main.temp;
@@ -84,7 +88,9 @@ function displayWeather(selectedCity){
         innerTodayContent += "<p>Humidity: " + humidityVal + "%</p>";
         var windSpVal = todayResponse.wind.speed;
         innerTodayContent +="<p>Wind Speed: " + windSpVal + " MPH</p>";
-        todayEl.innerHTML = innerTodayContent;
+    
+        //todayEl.innerHTML = innerTodayContent;
+
         return fetch(
             'https://api.openweathermap.org/data/2.5/forecast?q='+ selectedCity+'&appid=0d3489588c8dc1cc4818f8f7817f20e1&units=imperial'
         )
@@ -107,5 +113,39 @@ function displayWeather(selectedCity){
             humidity+'%</p></div>';
         }
         weekEl.innerHTML = innerWeekContent;
+    })
+
+    fetch(
+        'https://api.openweathermap.org/data/2.5/weather?q=' + selectedCity + '&appid=0d3489588c8dc1cc4818f8f7817f20e1&units=imperial'
+    )
+    .then(function(locationResponse){
+        return locationResponse.json();
+    })
+    .then(function(locationResponse){
+        console.log(locationResponse.coord);
+        var lon = locationResponse.coord.lon;
+        var lat = locationResponse.coord.lat;
+        
+        return fetch('http://api.openweathermap.org/data/2.5/uvi?&lat='+lat+'&lon='+lon+ '&appid=0d3489588c8dc1cc4818f8f7817f20e1&units=imperial');
+    }
+    )
+    .then(function(uvResponse){
+        //console.log(response.json().value)
+        return uvResponse.json();
+    })
+    .then(function(uvResponse){
+        console.log(uvResponse.value)
+        var uv = uvResponse.value;
+        innerTodayContent += "<p>UV Index: "
+        if(uv <= 3){
+            innerTodayContent += '<span class=" btn btn-sm btn-success">' + uv + "</span></p>";
+        }
+        else if(uv <= 7){
+            innerTodayContent += '<span class="btn btn-sm btn-warning">' + uv + "</span></p>";
+        }
+        else{
+            innerTodayContent += '<span class="btn btn-sm btn-danger">' + uv + "</span></p>";
+        }
+        todayEl.innerHTML = innerTodayContent;
     })
 }
