@@ -15,10 +15,20 @@ function  citySearch(){
         var todayEl = document.getElementById("todayWeather");
         var todayDate = moment().format('l');
         document.getElementById("searchCity").value = "";
-        var cityEl = document.createElement("li");
-        cityEl.className = "searchedCity list-group-item";
-        cityEl.innerHTML = cityVal;
-        searchEl.appendChild(cityEl);
+        var exist = false;
+        for (var i =0; i < searchEl.childNodes.length; i++){
+            console.log(searchEl.childNodes[i].innerHTML);
+            if( cityVal === searchEl.childNodes[i].innerHTML){
+                exist = true;
+            }
+        }
+        console.log(searchEl);
+        if(!exist){
+            var cityEl = document.createElement("li");
+            cityEl.className = "searchedCity list-group-item";
+            cityEl.innerHTML = cityVal;
+            searchEl.appendChild(cityEl);
+        }       
         //todayEl.innerHTML = "<h2>"+cityVal+ " ("+todayDate+")</h2>";
         displayWeather(cityVal);
     }
