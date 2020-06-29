@@ -109,21 +109,3 @@ function displayWeather(selectedCity){
         weekEl.innerHTML = innerWeekContent;
     })
 }
-
-/* function savedSearch(savedCity){
-    console.log("Entered the savedSearch function");
-    clearResults();
-    /* var weekEl = document.getElementById("weekWeather");
-    var todayEl = document.getElementById("todayWeather"); 
-    console.log(this);
-    //var citySelected = savedCity;
-    console.log(savedCity);
-    displayWeather(savedCity);
-} */
-
-
-
-/* $("li").on("click", function(){
-    console.log("Trying to read history search: ", this);
-    displayWeather($(this).text());
-}); */
