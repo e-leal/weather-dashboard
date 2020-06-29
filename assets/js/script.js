@@ -1,24 +1,24 @@
 
 function  citySearch(){
-   // var innerTodayContent = "";
     var searchEl = document.getElementById("cityContainer");
     var cityVal = document.getElementById("searchCity").value;
     var weekEl = document.getElementById("weekWeather");
-    weekEl.innerHTML = "";
-    //console.log(cityVal);
-    if(cityVal.length ===  0){
+    clearResults();
+    if(cityVal === ""){
         alert("Please enter a valid city");
     }
-
-    var todayEl = document.getElementById("todayWeather");
-    var todayDate = moment().format('l');
-    document.getElementById("searchCity").value = "";
-    var cityEl = document.createElement("li");
-    cityEl.className = "list-group-item searchedCity";
-    cityEl.innerHTML = cityVal;
-    searchEl.appendChild(cityEl);
-    //todayEl.innerHTML = "<h2>"+cityVal+ " ("+todayDate+")</h2>";
-    displayWeather(cityVal);
+    else{
+        var todayEl = document.getElementById("todayWeather");
+        var todayDate = moment().format('l');
+        document.getElementById("searchCity").value = "";
+        var cityEl = document.createElement("li");
+        cityEl.className = "list-group-item searchedCity";
+        cityEl.innerHTML = cityVal;
+        searchEl.appendChild(cityEl);
+        //todayEl.innerHTML = "<h2>"+cityVal+ " ("+todayDate+")</h2>";
+        displayWeather(cityVal);
+    }
+    
 }
 
 
