@@ -23,6 +23,11 @@ function saveCities(){
 function  citySearch(){
     var searchEl = document.getElementById("cityList");
     var cityVal = document.getElementById("searchCity").value;
+    cityVal = cityVal.toLowerCase();
+    var upper = cityVal.charAt(0).toUpperCase();
+    cityVal = cityVal.slice(1);
+    cityVal = upper+cityVal;
+    console.log(cityVal)
     var weekEl = document.getElementById("weekWeather");
     clearResults();
     if(cityVal === ""){
